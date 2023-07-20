@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:product_viewer/core/utils/cach_helper.dart';
 import 'package:product_viewer/core/utils/my_routes.dart';
+import 'package:product_viewer/core/utils/widgets/global_button.dart';
 import 'package:product_viewer/features/verify/presentation/manager/verifyCubit/verify_cubit.dart';
 import 'package:product_viewer/features/verify/presentation/manager/verifyCubit/verify_state.dart';
 import 'package:product_viewer/features/verify/presentation/view/widgets/keyboardPart/keyboard_part.dart';
@@ -34,54 +35,30 @@ class VerifyView extends StatelessWidget {
                         colors: [Color(0xD80062BD), Color(0x000062BD)],
                       ),
                     ),
-                    child:  Column(
+                    child:   Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const VerifyText(),
                         const NumbersRow(),
                         const CustomTextButton(),
-                        TextButton(
-                          onPressed: () {
+                        GlobalButton(
+                            text: 'verify',
+                          onPressed: (){
                             verifyCubit.userVerify(code: verifyCubit.compileCode(), phone: CacheHelper.getPhone('phone')!);
                             Fluttertoast.showToast(
-                                msg: verifyCubit.message,
-                                toastLength: Toast.LENGTH_LONG,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 4,
-                                backgroundColor: Colors.blueAccent,
-                                textColor: Colors.white,
-                                fontSize: 16.0,);
+                              msg: verifyCubit.message,
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 4,
+                              backgroundColor: Colors.blueAccent,
+                              textColor: Colors.white,
+                              fontSize: 16.0,);
                             if(state is VerifySuccessState){
                               Navigator.pushNamed(context, MyRoutes.kHelpView);
                             }
                           },
-                          child: Container(
-                            width: 266.w,
-                            height: 40.h,
-                            decoration: ShapeDecoration(
-                              gradient: const LinearGradient(
-                                end: Alignment(1.00, 0.00),
-                                begin: Alignment(-1, 0),
-                                colors: [Color(0xFF0062BD), Color(0x7F0062BD), Color(0x440062BD)],
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Verify',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                        ),
                         //CustomButton(text: 'Verify',route: MyRoutes.kHelpView),
                       ],
                     ),
